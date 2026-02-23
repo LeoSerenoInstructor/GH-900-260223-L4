@@ -24,9 +24,45 @@ activities = {
     "Chess Club": {
         "description": "Learn strategies and compete in chess tournaments",
         "schedule": "Fridays, 3:30 PM - 5:00 PM",
-        "max_participants": 12,
+        "max_participants": 5,
         "participants": ["michael@mergington.edu", "daniel@mergington.edu"]
-    },
+        },
+    "Basketball": {
+        "description": "Team sport focusing on basketball skills and competition",
+        "schedule": "Mondays and Wednesdays, 4:00 PM - 5:30 PM",
+        "max_participants": 15,
+        "participants": ["james@mergington.edu"]
+        },
+       "Soccer": {
+        "description": "Football league with friendly matches and tournaments",
+        "schedule": "Tuesdays and Thursdays, 4:00 PM - 5:30 PM",
+        "max_participants": 18,
+        "participants": ["lucas@mergington.edu"]
+        },
+    "Pottery Club": {
+        "description": "Learn ceramics and pottery techniques",
+        "schedule": "Saturdays, 10:00 AM - 12:00 PM",
+        "max_participants": 12,
+        "participants": ["isabella@mergington.edu"]
+        },
+    "Woodworking": {
+        "description": "Craft wooden furniture and decorative items",
+        "schedule": "Wednesdays, 3:30 PM - 5:00 PM",
+        "max_participants": 10,
+        "participants": ["noah@mergington.edu"]
+        },
+    "Biology Club": {
+        "description": "Explore life sciences through experiments and field trips",
+        "schedule": "Mondays, 3:30 PM - 4:30 PM",
+        "max_participants": 16,
+        "participants": ["ava@mergington.edu"]
+        },
+    "Physics Lab": {
+        "description": "Hands-on physics experiments and demonstrations",
+        "schedule": "Fridays, 3:30 PM - 4:30 PM",
+        "max_participants": 14,
+        "participants": ["liam@mergington.edu"]
+        },
     "Programming Class": {
         "description": "Learn programming fundamentals and build software projects",
         "schedule": "Tuesdays and Thursdays, 3:30 PM - 4:30 PM",
@@ -61,6 +97,14 @@ def signup_for_activity(activity_name: str, email: str):
 
     # Get the specific activity
     activity = activities[activity_name]
+
+    # Check if student is already registered
+    if email in activity["participants"]:
+        raise HTTPException(status_code=400, detail="Student is already signed up for this activity")
+
+    # Check if activity is full
+    if len(activity["participants"]) >= activity["max_participants"]:
+        raise HTTPException(status_code=400, detail="Activity is full")
 
     # Add student
     activity["participants"].append(email)
